@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   data() {
     return {
@@ -28,9 +29,11 @@ export default {
       images: [],
     }
   },
+
   mounted() {
     this.fetchImages()
   },
+
   methods: {
     onFileChange(e) {
       const reader = new FileReader()
@@ -40,33 +43,39 @@ export default {
       reader.readAsDataURL(e.target.files[0])
     },
     async uploadImage() {
-      await fetch('http://localhost:8000/api/images/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-      image_base64: this.file,
-      description: this.description
+      try {
+      await axios.post('http://localhost:8000/api/images/', {
+        image_base64: this.file,
+        description: this.description
     })
-
-      })
       this.description = ''
       this.file = null
       this.fetchImages()
-    },
-    async fetchImages() {
-      const res = await fetch('http://localhost:8000/api/images/')
-      this.images = await res.json()
-    },
-    async deleteImage(id) {
-      await fetch(`http://localhost:8000/api/images/${id}/`, {
-        method: 'DELETE'
-      })
-      this.fetchImages()
+    } catch (error) {
+      console.error('Ошибка при загрузки изображения:', error)
     }
+  },
+
+    async fetchImages() {
+      try {
+        const res = await axios.get('http://localhost:8000/api/images/')
+        this.images = res.data
+      } catch (error) {
+        console.error('Ошибка при получении изображений:', error)
+      }
+    },
+
+    async deleteImage(id) {
+      try {
+      await axios.delete(`http://localhost:8000/api/images/${id}/`,)
+      this.fetchImages()
+    } catch (error) {
+        console.error('Ошибка при удалении:', error)
+      }
+  }
   }
 }
+
 </script>
 
 <style>
