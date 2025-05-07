@@ -11,7 +11,7 @@
     <div v-if="images.length">
       <h2>Загруженные картинки</h2>
       <div v-for="img in images" :key="img.id" style="margin-bottom: 20px">
-        <img :src="img.image" alt="картинка" width="150" />
+        <img :src="img.image_base64" alt="картинка" width="150" />
         <p>{{ img.description }}</p>
         <button @click="deleteImage(img.id)">Удалить</button>
       </div>
@@ -46,9 +46,10 @@ export default {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          image: this.file,
-          description: this.description
-        })
+      image_base64: this.file,
+      description: this.description
+    })
+
       })
       this.description = ''
       this.file = null
