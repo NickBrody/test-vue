@@ -1,22 +1,46 @@
 <template>
-  <div class="container">
-    <h1>Image Upload</h1>
+<div class="container max-w-xl mx-auto px-4 py-8">
+  <h1 class="text-5xl font-bold text-center text-white mb-8">Загрузка изображения</h1>
 
     <form @submit.prevent="uploadImage">
-      <input type="file" @change="onFileChange" required />
-      <input type="text" v-model="description" placeholder="Описание" required />
-      <button type="submit">Загрузить</button>
+      <div class="mb-5">
+      <input
+      type="text"
+      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      v-model="description"
+      placeholder="Добавить описание"
+      required />
+      </div>
+
+      <input
+      type="file"
+      accept="image/*"
+      class="file:mr-4 file:rounded-full file:border-0 file:bg-violet-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-violet-700 hover:file:bg-violet-100 dark:file:bg-violet-600 dark:file:text-violet-100 dark:hover:file:bg-violet-500 ..."
+      @change="onFileChange" required />
+
+      <button
+      class="bg-sky-500 hover:bg-sky-700 py-1 px-3 ml-2"
+      type="submit">Загрузить</button>
     </form>
 
-    <div v-if="images.length">
-      <h2>Загруженные картинки</h2>
-      <div v-for="img in images" :key="img.id" style="margin-bottom: 20px">
-        <img :src="img.image_base64" alt="картинка" width="150" />
-        <p>{{ img.description }}</p>
-        <button @click="deleteImage(img.id)">Удалить</button>
-      </div>
-    </div>
+    <div v-if="images.length" class="mt-8">
+      <h2 class="text-2xl font-semibold text-center mb-4">Загруженные картинки</h2>
+      <div
+    v-for="img in images"
+    :key="img.id"
+    class="flex flex-col items-center gap-2 mb-6"
+  >
+  <img :src="img.image_base64" alt="картинка" class="w-40 rounded shadow" />
+  <p class="text-white text-md text-center max-w-xs">{{ img.description }}</p>
+  <button
+      @click="deleteImage(img.id)"
+      class="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded"
+    >
+      Удалить
+    </button>
   </div>
+    </div>
+</div>
 </template>
 
 <script>
