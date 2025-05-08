@@ -30,7 +30,8 @@
     :key="img.id"
     class="flex flex-col items-center gap-2 mb-6"
   >
-  <img :src="img.image_base64" alt="картинка" class="w-40 rounded shadow" />
+  
+  <img :src="img.image_base64" alt="картинка" class="w-3/4 max-w-4xl rounded shadow" />
   <p class="text-white text-md text-center max-w-xs">{{ img.description }}</p>
   <button
       @click="deleteImage(img.id)"
