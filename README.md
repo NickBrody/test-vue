@@ -41,6 +41,7 @@
 3. Установите зависимости:
 
     ```bash
+    cd backend/test_task
     pip install -r requirements.txt
     ```
 
